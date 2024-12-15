@@ -71,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Group_UnitTest.cs" />
+    <Compile Include="Generators\CS\MSTestGenerator.cs" />
+    <Compile Include="Generators\CS\XUnitGenerator.cs" />
+    <Compile Include="Generators\IGenerator.cs" />
     <Compile Include="ObjectMessage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -79,7 +82,6 @@
     </Compile>
     <Compile Include="UI\CanvasLog.cs" />
     <Compile Include="Components\Comp_Assert.cs" />
-    <Compile Include="Generator.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner.cs" />
@@ -90,6 +92,8 @@
       <DependentUpon>UnitTestsSourceCodeGeneratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TypeUtils.cs" />
+    <Compile Include="Utils\IOHelper.cs" />
+    <Compile Include="Utils\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

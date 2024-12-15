@@ -8,6 +8,9 @@ using Tenrec.Utils;
 
 namespace Tenrec.Generators.CS
 {
+    /// <summary>
+    /// Creates unit-tests in XUnit framework for selected grasshopper script files containing Tenrec groups.
+    /// </summary>
     public class XUnitGenerator : IGenerator
     {
         public string CreateAutoTestSourceFile
@@ -47,6 +50,8 @@ namespace Tenrec.Generators.CS
                         var groups = doc.Objects.Where(o => o.ComponentGuid == Group_UnitTest.ID).ToList();
                         if (groups.Count == 0)
                             continue;
+
+                        #region Crearte_Fixture_Class
                         sb.AppendLine(StringHelper.IndexedString($"public class AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}_Fixture : GHFileFixture", 1));
                         sb.AppendLine(StringHelper.IndexedString("{", 1));
                         sb.AppendLine(StringHelper.IndexedString($"public AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}_Fixture()", 2));
@@ -54,6 +59,7 @@ namespace Tenrec.Generators.CS
                         sb.AppendLine(StringHelper.IndexedString("{", 2));
                         sb.AppendLine(StringHelper.IndexedString("}", 2));
                         sb.AppendLine(StringHelper.IndexedString("}", 1));
+                        #endregion
 
                         sb.AppendLine(StringHelper.IndexedString($"public class AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}" +
                             $" : IClassFixture<AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}_Fixture>", 1));
@@ -62,6 +68,7 @@ namespace Tenrec.Generators.CS
                         sb.AppendLine(StringHelper.IndexedString($"private readonly AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}_Fixture fixture;", 2));
                         sb.AppendLine(StringHelper.IndexedString("private readonly ITestOutputHelper context;", 2));
 
+                        #region Test_Class_Constructor
                         sb.AppendLine(StringHelper.IndexedString($"public AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}" +
                             $" (AutoTest_{StringHelper.CodeableNickname(doc.DisplayName)}_Fixture fixture, " +
                             $"ITestOutputHelper context)", 2));
@@ -69,6 +76,7 @@ namespace Tenrec.Generators.CS
                         sb.AppendLine(StringHelper.IndexedString("this.fixture = fixture;", 3));
                         sb.AppendLine(StringHelper.IndexedString("this.context = context;", 3));
                         sb.AppendLine(StringHelper.IndexedString("}", 2));
+                        #endregion
 
                         foreach (var group in groups)
                         {

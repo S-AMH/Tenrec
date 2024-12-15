@@ -3,6 +3,9 @@ using System;
 
 namespace Tenrec.Utils
 {
+    /// <summary>
+    /// Contains helper classes for input/output operations used in Tenrec project.
+    /// </summary>
     public static class IOHelper
     {
         public static bool OpenDocument(string filePath, out GH_Document doc)

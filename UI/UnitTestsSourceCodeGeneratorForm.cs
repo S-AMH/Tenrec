@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Tenrec.Generators;
+using Tenrec.Generators.CS;
 
 namespace Tenrec.UI
 {
@@ -51,7 +53,7 @@ namespace Tenrec.UI
             }
             else
             {
-                foreach(var folder in folders)
+                foreach (var folder in folders)
                 {
                     if (!System.IO.Directory.Exists(folder))
                     {
@@ -59,7 +61,7 @@ namespace Tenrec.UI
                         return false;
                     }
                 }
-            } 
+            }
             var outputFolder = GetOutputFolder();
             if (string.IsNullOrEmpty(outputFolder))
             {
@@ -101,7 +103,7 @@ namespace Tenrec.UI
         private void UnitTestsSourceCodeGeneratorForm_Load(object sender, EventArgs e)
         {
             var activeDoc = Grasshopper.Instances.ActiveCanvas?.Document;
-            if(activeDoc != null && !string.IsNullOrEmpty(activeDoc.FilePath))
+            if (activeDoc != null && !string.IsNullOrEmpty(activeDoc.FilePath))
             {
                 textBoxFiles.Text = System.IO.Path.GetDirectoryName(activeDoc.FilePath);
             }
@@ -122,8 +124,16 @@ namespace Tenrec.UI
             var outputFolder = GetOutputFolder();
             var outputName = GetOutputName();
             var language = GetLanguage();
-            var framework = GetFramework(); 
-            textBoxLog.Text = Generator.CreateAutoTestSourceFile(folderFiles, outputFolder, outputName, language, framework);
+            var framework = GetFramework();
+            IGenerator generator = null;
+            if (language == "cs")
+            {
+                if (framework == "mstest")
+                    generator = new MSTestGenerator();
+                else if (framework == "xunit")
+                    generator = new XUnitGenerator();
+            }
+            textBoxLog.Text = generator.CreateAutoTestSourceFile(folderFiles, outputFolder, outputName);
             if (textBoxLog.Text.Contains("successfully"))
                 textBoxLog.ForeColor = Grasshopper.GUI.GH_GraphicsUtil.BlendColour(Color.Green, Color.Black, 0.5);
             else

@@ -199,7 +199,7 @@ namespace Tenrec.UI
             this.comboBoxFramework.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFramework.FormattingEnabled = true;
             this.comboBoxFramework.Items.AddRange(new object[] {
-            "MSTest"});
+            "MSTest", "XUnit"});
             this.comboBoxFramework.Location = new System.Drawing.Point(3, 16);
             this.comboBoxFramework.Name = "comboBoxFramework";
             this.comboBoxFramework.Size = new System.Drawing.Size(192, 21);
